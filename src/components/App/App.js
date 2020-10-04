@@ -99,7 +99,7 @@ function App() {
     }
     console.log('filteredTasks');
     console.log(filteredTasks);
-  }, [filter]);
+  }, [filter, todolist]);
 
 
   return (

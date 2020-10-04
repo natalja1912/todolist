@@ -10,42 +10,69 @@ function App() {
   const [inputValue, setInputValue] = useState('');
   const [filter, setFilter] = useState('all');
   const [filteredTasks, setFilteredTasks] = useState(todos);
+  console.log('filt', filteredTasks);
 
+
+  //при нажатии кнопки edit меняем значение поля ввода формы на текст задачи, к которой относится нажатая кнопка
   function handleEditButton(evt) {
     const selectedListItem = evt.target.closest('.list__item');
     const selectedInput = selectedListItem.querySelector('.list__item-text');
     document.querySelector('.form__input').value = selectedInput.textContent;
   }
 
+  //копирование задачи
   function handleCopyButton(evt) {
     const selectedListItem = evt.target.closest('.list__item');
     const selectedInput = selectedListItem.querySelector('.list__item-text');
-    const newToDo = selectedInput.textContent;
-    const toDoToCopyIndex = todolist.indexOf(newToDo);
+    //переменная newToDo  - скопированная задача, которую нужно добавить в список дел
+    const newToDo = { task: selectedInput.textContent, checked: false };
+    //определяем индекс задачи, которую нужно скопировать, в общем массиве дел
+    let toDoToCopyIndex = 0;
+    for (let i = 0; i < todolist.length; i++) {
+      if (todolist[i].task === newToDo.task) {
+        toDoToCopyIndex = i;
+      }
+    }
+    //изменяем старый массив дел, добавляя в него скопированную задачу после аналогичной старой
     todolist.splice(toDoToCopyIndex, 0, newToDo);
+    //создаем новый массив и с помощью него обновляем стейт todolist
     const newToDoList = todolist.concat();
     setToDoList(newToDoList);
   }
 
+  //удаление задачи из списка дел
   function handleDeleteButton(evt) {
+    //определяем, какую задачу нужно удалить
     const selectedListItem = evt.target.closest('.list__item');
     const selectedInput = selectedListItem.querySelector('.list__item-text');
     const deletedToDo = selectedInput.textContent;
-    const toDoToDeleteIndex = todolist.indexOf(deletedToDo);
+    //определяем индекс задачи, которую нужно удалить, в общем массиве дел
+    let toDoToDeleteIndex = 0;
+    for (let i = 0; i < todolist.length; i++) {
+      if (todolist[i].task === deletedToDo) {
+        toDoToDeleteIndex = i;
+      }
+    }
     todolist.splice(toDoToDeleteIndex, 1);
     const newToDoList = todolist.concat();
     setToDoList(newToDoList);
   }
 
+  //добавление новой задачи в список дел
   function handleSubmitButton(evt) {
     evt.preventDefault();
     setToDoList([
-      inputValue,
+      {
+        task: inputValue,
+        checked: false
+      },
       ...todolist
     ]);
     setInputValue('');
   }
 
+
+  //изменение значка checkbox, отмечаем выполнена задача или нет
   function handleCheckBox(evt) {
     const label = evt.target.parentNode;
     todolist.forEach((todo) => {
@@ -54,17 +81,26 @@ function App() {
       }
     })
     setToDoList(todolist);
+    if (filter === 'done') {
+      setFilter('change');
+    }
+    console.log('todolist');
+    console.log(todolist);
     label.classList.toggle('label-strike');
   }
 
+  //отрисовка задач при каждом изменении переменной filter 
   useEffect(() => {
-    if (filter === "done") {
+    if (filter !== "all") {
       setFilteredTasks(todolist.filter(todo => todo.checked === true))
     }
     else {
       setFilteredTasks(todolist);
     }
-  }, [filter, todolist]);
+    console.log('filteredTasks');
+    console.log(filteredTasks);
+  }, [filter]);
+
 
   return (
     <div className="App">
@@ -84,8 +120,8 @@ function App() {
           filteredTasks.map((todo, index) =>
             <li className="list__item" key={index}>
               <div className="list__item-text">
-                <label className="list__item-label">
-                  <input className="list__item-checkbox" type="checkbox" onClick={(evt) => handleCheckBox(evt)} />
+                <label className={`list__item-label ${todo.checked && 'label-strike'}`}>
+                  <input className='list__item-checkbox' type="checkbox" defaultChecked={todo.checked} onClick={(evt) => handleCheckBox(evt)} />
                   {todo.task}
                 </label>
               </div>

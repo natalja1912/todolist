@@ -18,7 +18,7 @@ const todos = [
   },
   {
     task: 'Погулять с собакой',
-    checked: false
+    checked: true
   },
   {
     task: 'Разобраться в замыканиях',

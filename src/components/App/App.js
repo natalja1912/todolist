@@ -12,9 +12,11 @@ function App() {
   //переменная taskToEdit для определения, какое задание нужно редактировать, при сабмите формы
   const [taskToEdit, setTaskToEdit] = useState();
   const [filter, setFilter] = useState('all');
+  const [submitButtonValue, setSubmitButtonValue] = useState('Добавить');
 
   //при нажатии кнопки edit меняем значение поля ввода формы на текст задачи, к которой относится нажатая кнопка
   function handleEditButton(index) {
+    setSubmitButtonValue('Сохранить');
     const selectedTask = todolist[index];
     setInputValue(selectedTask.task);
     setTaskToEdit(index);
@@ -53,13 +55,14 @@ function App() {
     }
     setInputValue('');
     setTaskToEdit();
+    setSubmitButtonValue('Добавить');
   }
 
 
   //изменение значка checkbox, отмечаем выполнена задача или нет
   function handleCheckBox(index) {
     const selectedTask = todolist[index];
-    todolist.splice(index, 1, {task: selectedTask.task, checked: !selectedTask.checked});
+    todolist.splice(index, 1, { task: selectedTask.task, checked: !selectedTask.checked });
     const newToDoList = todolist.concat();
     setToDoList(newToDoList);
   }
@@ -73,7 +76,7 @@ function App() {
   return (
     <div className="App">
       <Header onClick={(value) => setFilter(value)} />
-      <Form value={inputValue} handleChange={(value) => setInputValue(value)} handleSubmit={handleSubmitButton} />
+      <Form value={inputValue} submitButtonValue={submitButtonValue} handleChange={(value) => setInputValue(value)} handleSubmit={handleSubmitButton} />
       <ul className="list">
         {
           renderedToDos.map((todo, index) =>

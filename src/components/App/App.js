@@ -37,7 +37,7 @@ function App() {
 
   //добавление новой задачи в список дел
   function handleSubmitButton() {
-    if (!taskToEdit) {
+    if (typeof taskToEdit !== 'number') {
       setToDoList([
         {
           task: inputValue,

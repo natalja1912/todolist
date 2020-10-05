@@ -1,0 +1,17 @@
+.checkbox{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    margin-right: 5px;
+    width: 22px;
+    height: 22px;
+    border: none;
+    background-color: #ffffff;
+    background-size: cover;
+    border-radius: 25%;
+}
+
+.checkbox_checked{
+    background-image: url('../../images/checkbox_active.svg');
+    background-size: cover;
+}

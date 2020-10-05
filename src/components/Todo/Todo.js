@@ -3,6 +3,7 @@ import './Todo.css';
 import EditIcon from '../../icons/EditIcon';
 import CopyIcon from '../../icons/CopyIcon';
 import DeleteIcon from '../../icons/DeleteIcon';
+import Checkbox from '../Checkbox/Checkbox';
 
 function Todo({ todo, index, handleEditButton, handleCopyButton, handleDeleteButton, handleCheckBox }) {
 
@@ -10,7 +11,7 @@ function Todo({ todo, index, handleEditButton, handleCopyButton, handleDeleteBut
         <li className="list__item" key={index}>
             <div className="list__item-text">
                 <label className={`list__item-label ${todo.checked && 'label-strike'}`}>
-                    <input className='list__item-checkbox' checked={todo.checked} type="checkbox" onClick={() => handleCheckBox(index)} />
+                    <Checkbox checked={todo.checked} onClick={() => handleCheckBox(index)} />
                     {todo.task}
                 </label>
             </div>

@@ -14,6 +14,8 @@
   
   .list__item-label{
     white-space: normal;
+    display: flex;
+    align-items: center;
   }
   
   .list__item-buttons{

@@ -1,141 +1,86 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import todos from '../../utils/constants';
-import EditIcon from '../../icons/EditIcon';
-import CopyIcon from '../../icons/CopyIcon';
-import DeleteIcon from '../../icons/DeleteIcon';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import Form from '../Form/Form';
+import Todo from '../Todo/Todo';
 
 function App() {
   const [todolist, setToDoList] = useState(todos);
   const [inputValue, setInputValue] = useState('');
+  //переменная taskToEdit для определения, какое задание нужно редактировать, при сабмите формы
+  const [taskToEdit, setTaskToEdit] = useState();
   const [filter, setFilter] = useState('all');
-  const [filteredTasks, setFilteredTasks] = useState(todos);
-  console.log('filt', filteredTasks);
-
 
   //при нажатии кнопки edit меняем значение поля ввода формы на текст задачи, к которой относится нажатая кнопка
-  function handleEditButton(evt) {
-    const selectedListItem = evt.target.closest('.list__item');
-    const selectedInput = selectedListItem.querySelector('.list__item-text');
-    document.querySelector('.form__input').value = selectedInput.textContent;
+  function handleEditButton(index) {
+    const selectedTask = todolist[index];
+    setInputValue(selectedTask.task);
+    setTaskToEdit(index);
   }
 
   //копирование задачи
-  function handleCopyButton(evt) {
-    const selectedListItem = evt.target.closest('.list__item');
-    const selectedInput = selectedListItem.querySelector('.list__item-text');
-    //переменная newToDo  - скопированная задача, которую нужно добавить в список дел
-    const newToDo = { task: selectedInput.textContent, checked: false };
-    //определяем индекс задачи, которую нужно скопировать, в общем массиве дел
-    let toDoToCopyIndex = 0;
-    for (let i = 0; i < todolist.length; i++) {
-      if (todolist[i].task === newToDo.task) {
-        toDoToCopyIndex = i;
-      }
-    }
-    //изменяем старый массив дел, добавляя в него скопированную задачу после аналогичной старой
-    todolist.splice(toDoToCopyIndex, 0, newToDo);
-    //создаем новый массив и с помощью него обновляем стейт todolist
+  function handleCopyButton(index) {
+    const selectedTask = todolist[index];
+    todolist.splice(index, 0, selectedTask);
     const newToDoList = todolist.concat();
     setToDoList(newToDoList);
   }
 
   //удаление задачи из списка дел
-  function handleDeleteButton(evt) {
-    //определяем, какую задачу нужно удалить
-    const selectedListItem = evt.target.closest('.list__item');
-    const selectedInput = selectedListItem.querySelector('.list__item-text');
-    const deletedToDo = selectedInput.textContent;
-    //определяем индекс задачи, которую нужно удалить, в общем массиве дел
-    let toDoToDeleteIndex = 0;
-    for (let i = 0; i < todolist.length; i++) {
-      if (todolist[i].task === deletedToDo) {
-        toDoToDeleteIndex = i;
-      }
-    }
-    todolist.splice(toDoToDeleteIndex, 1);
+  function handleDeleteButton(index) {
+    todolist.splice(index, 1);
     const newToDoList = todolist.concat();
     setToDoList(newToDoList);
   }
 
   //добавление новой задачи в список дел
-  function handleSubmitButton(evt) {
-    evt.preventDefault();
-    setToDoList([
-      {
-        task: inputValue,
-        checked: false
-      },
-      ...todolist
-    ]);
+  function handleSubmitButton() {
+    if (!taskToEdit) {
+      setToDoList([
+        {
+          task: inputValue,
+          checked: false
+        },
+        ...todolist
+      ])
+    }
+    else {
+      todolist.splice(taskToEdit, 1, { task: inputValue, checked: false });
+      const newToDoList = todolist.concat();
+      setToDoList(newToDoList);
+    }
     setInputValue('');
+    setTaskToEdit();
   }
 
 
   //изменение значка checkbox, отмечаем выполнена задача или нет
-  function handleCheckBox(evt) {
-    const label = evt.target.parentNode;
-    todolist.forEach((todo) => {
-      if (todo.task === evt.target.parentNode.textContent) {
-        todo.checked ? todo.checked = false : todo.checked = true
-      }
-    })
-    setToDoList(todolist);
-    if (filter === 'done') {
-      setFilter('change');
-    }
-    console.log('todolist');
-    console.log(todolist);
-    label.classList.toggle('label-strike');
+  function handleCheckBox(index) {
+    const selectedTask = todolist[index];
+    todolist.splice(index, 1, {task: selectedTask.task, checked: !selectedTask.checked});
+    const newToDoList = todolist.concat();
+    setToDoList(newToDoList);
   }
 
-  //отрисовка задач при каждом изменении переменной filter 
-  useEffect(() => {
-    if (filter !== "all") {
-      setFilteredTasks(todolist.filter(todo => todo.checked === true))
-    }
-    else {
-      setFilteredTasks(todolist);
-    }
-    console.log('filteredTasks');
-    console.log(filteredTasks);
-  }, [filter, todolist]);
-
+  //массив сделанных заданий
+  const doneToDos = todolist.filter(todo => todo.checked === true);
+  //массив заданий для отрисовки
+  let renderedToDos = [];
+  filter === 'done' ? renderedToDos = doneToDos : renderedToDos = todolist;
 
   return (
     <div className="App">
-      <header className="header">
-        <nav className="header__nav">
-          <button className="filter__button" onClick={() => setFilter('all')}>&rarr; Вce задачи</button>
-          <button className="filter__button" onClick={() => setFilter('done')}>&rarr; Выполненные задачи</button>
-        </nav>
-        <h1 className="header__heading">Список дел</h1>
-      </header>
-      <form className="form">
-        <input className="form__input" type="text" placeholder="Следующее дело..." value={inputValue} onChange={(evt) => setInputValue(evt.target.value)} />
-        <button className="form__button" type="submit" onClick={(evt) => handleSubmitButton(evt)}>Добавить</button>
-      </form>
+      <Header onClick={(value) => setFilter(value)} />
+      <Form value={inputValue} handleChange={(value) => setInputValue(value)} handleSubmit={handleSubmitButton} />
       <ul className="list">
         {
-          filteredTasks.map((todo, index) =>
-            <li className="list__item" key={index}>
-              <div className="list__item-text">
-                <label className={`list__item-label ${todo.checked && 'label-strike'}`}>
-                  <input className='list__item-checkbox' type="checkbox" defaultChecked={todo.checked} onClick={(evt) => handleCheckBox(evt)} />
-                  {todo.task}
-                </label>
-              </div>
-              <div className="list__item-buttons">
-                <button className="list__item-button" onClick={(evt) => handleEditButton(evt)}><EditIcon /></button>
-                <button className="list__item-button" onClick={(evt) => handleCopyButton(evt)}><CopyIcon /></button>
-                <button className="list__item-button" onClick={(evt) => handleDeleteButton(evt)}><DeleteIcon /></button>
-              </div>
-            </li>)
+          renderedToDos.map((todo, index) =>
+            <Todo todo={todo} index={index} handleCopyButton={(value) => handleCopyButton(value)} handleEditButton={(value) => handleEditButton(value)} handleDeleteButton={(value) => handleDeleteButton(value)} handleCheckBox={(value) => handleCheckBox(value)} />)
         }
       </ul>
-      <footer className="footer">
-        © Natalia Pavlova. 2020
-      </footer>
+      <Footer />
     </div>
   );
 }

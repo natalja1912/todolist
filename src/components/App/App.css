@@ -6,30 +6,6 @@
   align-items: center;
 }
 
-.header{
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  position: fixed;
-  top: 0;
-  background-color: black;
-}
-
-.header__nav{
-  display: flex;
-  flex-direction: column;
-  justify-items: flex-end;
-}
-
-.header__heading{
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  margin: 0 0 20px 0;
-  text-align: center;
-}
-
 .filter__buttons{
   display: flex;
   justify-content: flex-start;
@@ -55,44 +31,6 @@
   transition: all 0.6s ease-in;
 }
 
-.form{
-  width: 70%;
-  margin: 0;
-  padding: 0;
-  margin-top: 120px;
-  margin-bottom: 30px;
-  box-sizing: border-box;
-  display: flex;
-}
-
-.form__input{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  height: 100%;
-  width: 75%;
-  font-size: 24px;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.form__button{
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  padding: 10px;
-  margin-left: 10px;
-  height: 100%;
-  width: 25%;
-  border: none;
-  background-color: #ffffff;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 24px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
 .list{
   margin: 0;
   padding: 0;
@@ -103,68 +41,6 @@
   justify-content: center;
 }
 
-.list__item{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 24px;
-  border: 1px solid #6F6F6F;
-  padding: 25px;
-  margin-bottom: 10px;
-  
-}
-
-.list__item-label{
-  white-space: normal;
-}
-
-.list__item-buttons{
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.list__item-button{
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  margin-left: 20px;
-  box-sizing: border-box;
-  width: 22px;
-  height: 22px;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-}
-
-.list__item-text{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-}
-
-.list__item-checkbox{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-  border: none;
-  
-}
 
 
-.label-strike{
-  text-decoration: line-through;
-}
 
-
-.footer{
-  margin: 30px 0 30px 0;
-  color: #6F6F6F;
-}

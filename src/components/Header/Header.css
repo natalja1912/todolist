@@ -1,0 +1,23 @@
+.header{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    position: fixed;
+    top: 0;
+    background-color: black;
+  }
+  
+  .header__nav{
+    display: flex;
+    flex-direction: column;
+    justify-items: flex-end;
+  }
+  
+  .header__heading{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin: 0 0 20px 0;
+    text-align: center;
+  }

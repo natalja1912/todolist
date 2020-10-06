@@ -11,10 +11,25 @@
     margin-bottom: 10px;
     
   }
+
+  @media screen and (max-width: 500px) {
+    .list__item{
+      font-size: 18px;
+      padding: 10px;
+    }
+  }
+
+  @media screen and (max-width: 380px) {
+    .list__item{
+      font-size: 16px;
+    }
+  }
   
   .list__item-label{
     white-space: normal;
     display: flex;
+    justify-content: space-between;
+    flex-shrink: unset;
     align-items: center;
   }
   
@@ -35,6 +50,28 @@
     border: none;
     cursor: pointer;
   }
+
+  .list__item-button_edit{
+    background-image: url('../../images/icons/EditIcon.svg');
+    background-size: cover;
+  }
+
+  .list__item-button_copy{
+    background-image: url('../../images/icons/CopyIcon.svg');
+    background-size: cover;
+  }
+
+  .list__item-button_delete{
+    background-image: url('../../images/icons/DeleteIcon.svg');
+    background-size: cover;
+  }
+
+  @media screen and (max-width: 500px) {
+    .list__item-button{
+      width: 18px;
+      height: 18px;
+    }
+  }
   
   .list__item-text{
     margin: 0;
@@ -52,10 +89,9 @@
     width: 20px;
     height: 20px;
     border: none;
-    
   }
   
-  
+
   .label-strike{
     text-decoration: line-through;
   }

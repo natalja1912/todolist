@@ -7,6 +7,24 @@
     box-sizing: border-box;
     display: flex;
   }
+
+@media screen and (max-width: 1000px) {
+    .form{
+      width: 80%;
+    }
+}
+
+@media screen and (max-width: 850px) {
+  .form{
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .form{
+    width: 100%;
+  }
+}
   
   .form__input{
     margin: 0;
@@ -18,6 +36,14 @@
     padding: 10px;
     border-radius: 5px;
   }
+
+  @media screen and (max-width: 500px) {
+    .form__input{
+      font-size: 20px;
+      width: 65%;
+    }
+  }
+
   
   .form__button{
     display: inline-block;
@@ -34,4 +60,11 @@
     font-size: 24px;
     border-radius: 5px;
     cursor: pointer;
+  }
+
+  @media screen and (max-width: 500px) {
+    .form__button{
+      font-size: 20px;
+      width: 35%;
+    }
   }

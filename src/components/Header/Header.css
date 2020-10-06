@@ -13,6 +13,12 @@
     flex-direction: column;
     justify-items: flex-end;
   }
+
+  @media screen and (max-width: 500px) {
+    .header__nav{
+      font-size: 16px;
+    }
+}
   
   .header__heading{
     width: 100%;
@@ -21,3 +27,4 @@
     margin: 0 0 20px 0;
     text-align: center;
   }
+

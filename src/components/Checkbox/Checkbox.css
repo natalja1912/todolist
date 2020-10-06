@@ -1,9 +1,11 @@
 .checkbox{
     margin: 0;
     padding: 0;
+    display: block;
     box-sizing: border-box;
     margin-right: 5px;
     width: 22px;
+    min-width: 22px;
     height: 22px;
     border: none;
     background-color: #ffffff;
@@ -15,3 +17,11 @@
     background-image: url('../../images/checkbox_active.svg');
     background-size: cover;
 }
+
+@media screen and (max-width: 500px) {
+    .checkbox{
+      width: 18px;
+      min-width: 18px;
+      height: 18px;
+    }
+  }

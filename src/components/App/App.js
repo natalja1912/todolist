@@ -14,9 +14,13 @@ function App() {
   const [filter, setFilter] = useState('all');
   const [submitButtonValue, setSubmitButtonValue] = useState('Добавить');
 
+  function findIndex(value) {
+    return todolist.findIndex(todo => todo.task === value);
+  }
+
   //при нажатии кнопки edit меняем значение поля ввода формы на текст задачи, к которой относится нажатая кнопка
   function handleEditButton(value) {
-    const index = todolist.findIndex( todo => todo.task === value );
+    const index = findIndex(value);
     setSubmitButtonValue('Сохранить');
     const selectedTask = todolist[index];
     setInputValue(selectedTask.task);
@@ -25,7 +29,7 @@ function App() {
 
   //копирование задачи
   function handleCopyButton(value) {
-    const index = todolist.findIndex( todo => todo.task === value );
+    const index = findIndex(value);
     const selectedTask = todolist[index];
     todolist.splice(index, 0, selectedTask);
     const newToDoList = todolist.concat();
@@ -34,7 +38,7 @@ function App() {
 
   //удаление задачи из списка дел
   function handleDeleteButton(value) {
-    const index = todolist.findIndex( todo => todo.task === value );
+    const index = findIndex(value);
     todolist.splice(index, 1);
     const newToDoList = todolist.concat();
     setToDoList(newToDoList);
@@ -64,7 +68,7 @@ function App() {
 
   //изменение значка checkbox, отмечаем выполнена задача или нет
   function handleCheckBox(value) {
-    const index = todolist.findIndex( todo => todo.task === value );
+    const index = findIndex(value);
     const selectedTask = todolist[index];
     todolist.splice(index, 1, { task: selectedTask.task, checked: !selectedTask.checked });
     const newToDoList = todolist.concat();
